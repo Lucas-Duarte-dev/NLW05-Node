@@ -6,11 +6,11 @@ dotenv.config({
 
 module.exports = {
   type: "postgres",
-  host: "db",
+  host: "localhost",
   port: 5432,
   username: "postgres",
-  password: "docker",
-  database: "imobe",
+  password: "postgres",
+  database: "server-nlw",
   logging: false,
   entities: [process.env.TYPEORM_ENTITY],
   migrations: [process.env.TYPEORM_MIGRATION],
