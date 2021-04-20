@@ -6,7 +6,7 @@
   "description": "Criando uma projeto usando nodejs, express, typescript e seguindo os protocolos HTTP e WebSocket",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/server.ts",
-    "typeorm": "ts-node-dev node_modules/typeorm/cli.js"
+    "typeorm": "cross-env NODE_ENV=dev ts-node-dev node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
