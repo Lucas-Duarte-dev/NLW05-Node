@@ -3,13 +3,13 @@ import { User } from "../models/User";
 import { UserService } from "../services/UserService";
 
 class UserController {
-  async create(request: Request, response: Response) {
+  async create(request: Request, response: Response): Promise<Response> {
     const { email } = request.body;
 
     const userService = new UserService();
 
     try {
-      const user = await userService.create({ email: email });
+      const user = await userService.create(email);
 
       return response.json(user);
     } catch (error) {
@@ -17,3 +17,5 @@ class UserController {
     }
   }
 }
+
+export default new UserController();

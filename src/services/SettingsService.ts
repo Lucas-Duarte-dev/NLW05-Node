@@ -8,7 +8,7 @@ interface ISettingsCreate {
 }
 
 class SettingsService {
-  async create({ chat, username }: ISettingsCreate) {
+  async create({ chat, username }: ISettingsCreate): Promise<ISettingsCreate> {
     const settingsRepository = getCustomRepository(SettingRepository);
 
     const userAlreadyExist = await settingsRepository.findOne({ username });
