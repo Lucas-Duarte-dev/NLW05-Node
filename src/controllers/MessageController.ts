@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { Repository } from "typeorm";
-import { Message } from "../models/Message";
 import { MessagesService } from "../services/MessagesService";
 
 class MessageController {
