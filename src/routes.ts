@@ -6,6 +6,8 @@ import UserController from "./controllers/UserController";
 const routes = Router();
 
 routes.post("/settings", SettingController.create);
+routes.get("/settings/:username", SettingController.findByUsername);
+routes.put("/settings/:username", SettingController.update);
 
 routes.post("/users", UserController.create);
 

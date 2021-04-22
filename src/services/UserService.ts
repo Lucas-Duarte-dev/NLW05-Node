@@ -9,18 +9,18 @@ class UserService {
     this.userRepository = getCustomRepository(UserRespository);
   }
 
-  async create(email: string): Promise<{ email: string }> {
-    const userExist = await this.userRepository.findOne({ email });
-
-    if (userExist) {
-      return userExist;
-    }
-
+  async create(email: string) {
     const user = this.userRepository.create({ email });
 
     await this.userRepository.save(user);
 
     return user;
+  }
+
+  async findByEmail(email: string) {
+    const userExist = await this.userRepository.findOne({ email });
+
+    return userExist;
   }
 }
 
