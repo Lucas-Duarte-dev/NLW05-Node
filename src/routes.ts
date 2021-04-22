@@ -10,5 +10,6 @@ routes.post("/settings", SettingController.create);
 routes.post("/users", UserController.create);
 
 routes.post("/messages", MessageController.create);
+routes.get("/messages/:id", MessageController.showByUser);
 
 export default routes;

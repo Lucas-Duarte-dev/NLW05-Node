@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import { Repository } from "typeorm";
+import { Message } from "../models/Message";
 import { MessagesService } from "../services/MessagesService";
 
 class MessageController {
@@ -14,6 +16,16 @@ class MessageController {
     } catch (err) {
       return response.status(400).json({ error: err.message });
     }
+  }
+
+  async showByUser(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    const messagesService = new MessagesService();
+
+    const list = await messagesService.listByUser(id);
+
+    return response.json(list);
   }
 }
 
