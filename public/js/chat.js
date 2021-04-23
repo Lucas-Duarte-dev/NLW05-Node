@@ -1,5 +1,10 @@
+let socket_admin_id = null;
+let emailUser = null;
+
+let socket = null;
+
 document.querySelector("#start_chat").addEventListener("click", (event) => {
-  const socket = io();
+  socket = io();
 
   const chat_help = document.querySelector("#chat_help");
   chat_help.style.display = "none";
@@ -8,6 +13,8 @@ document.querySelector("#start_chat").addEventListener("click", (event) => {
   chat_in_support.style.display = "block";
 
   const email = document.getElementById("email").value;
+  emailUser = email;
+
   const text = document.getElementById("txt_help").value;
 
   socket.on("connect", () => {
@@ -21,9 +28,9 @@ document.querySelector("#start_chat").addEventListener("click", (event) => {
   });
 
   socket.on("client_list_all_messages", (messages) => {
-    let template_client = document.querySelector("#message_user_template")
+    var template_client = document.querySelector("#message-user-template")
       .innerHTML;
-    let template_admin = document.querySelector("#admin_template").innerHTML; // TOD
+    var template_admin = document.querySelector("#admin-template").innerHTML; // TOD
 
     messages.forEach((message) => {
       if (message.admin_id === null) {
@@ -41,4 +48,39 @@ document.querySelector("#start_chat").addEventListener("click", (event) => {
       }
     });
   });
+
+  socket.on("admin_send_to_client", (message) => {
+    socket_admin_id = message.socket;
+
+    const template_admin = document.querySelector("#admin_template").innerHTML;
+
+    const rendered = Mustache.render(template_admin, {
+      message_admin: message.text,
+    });
+
+    document.querySelector("#messages").innerHTML += rendered;
+  });
 });
+
+document
+  .querySelector("#send_message_button")
+  .addEventListener("click", (event) => {
+    const text = document.querySelector("#message_user");
+
+    const params = {
+      text: text.value,
+      socket_admin_id,
+    };
+
+    socket.emit("client_send_to_admin", params);
+
+    const template_client = document.querySelector("#message_user_template")
+      .innerHTML;
+
+    const rendered = Mustache.render(template_client, {
+      message: text.value,
+      email: emailUser,
+    });
+
+    document.querySelector("#messages").innerHTML += rendered;
+  });
