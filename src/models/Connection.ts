@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { User } from "./User";
 
 @Entity("connections")
 export class Connection {
@@ -13,6 +16,10 @@ export class Connection {
 
   @Column()
   admin_id: string;
+
+  @JoinColumn({ name: "user_id" })
+  @OneToOne(() => User)
+  user: User;
 
   @Column()
   user_id: string;
